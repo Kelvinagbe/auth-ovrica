@@ -161,12 +161,6 @@ const FirebaseVerificationPage = () => {
       <div className="lg:hidden relative z-10 flex flex-col min-h-screen">
         <div className="flex-1 flex flex-col justify-center px-6 py-12">
           <div className="w-full max-w-sm mx-auto">
-            {/* Logo/Brand */}
-            <div className="text-center mb-12">
-              <div className="w-16 h-16 mx-auto mb-4 bg-white rounded-2xl flex items-center justify-center">
-              </div>
-            </div>
-
             <div className="text-center mb-8">
               <div className="mx-auto mb-6 flex justify-center">
                 {getStatusIcon()}
@@ -207,8 +201,6 @@ const FirebaseVerificationPage = () => {
           <div className="flex-1 bg-gradient-to-br from-gray-900/80 via-black/90 to-gray-900/80 flex items-center justify-center p-12 relative">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
             <div className="text-center text-white max-w-lg relative z-10">
-              <div className="w-24 h-24 mx-auto mb-8 bg-white/90 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-lg">
-              </div>
               <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 Secure Verification
               </h2>
