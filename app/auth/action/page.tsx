@@ -94,10 +94,13 @@ const FirebaseVerificationPage = () => {
     switch (status) {
       case 'loading':
         return (
-          <div className="relative">
-            <div className="w-12 h-12 border-2 border-gray-300 rounded-full"></div>
-            <div className="absolute top-0 left-0 w-12 h-12 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            <div className="absolute top-1 left-1 w-10 h-10 border border-gray-400 border-t-transparent rounded-full animate-spin animation-delay-500" style={{animationDuration: '1.5s'}}></div>
+          <div className="relative w-16 h-2">
+            <div className="w-full h-full bg-gray-800 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-transparent via-white to-transparent w-1/3 animate-pulse rounded-full relative">
+                <div className="absolute inset-0 bg-white animate-[slideRight_2s_ease-in-out_infinite] rounded-full"></div>
+              </div>
+            </div>
+            <div className="absolute -top-1 -bottom-1 w-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-[slideRight_1.5s_ease-in-out_infinite] rounded-full"></div>
           </div>
         );
       case 'success':
@@ -128,14 +131,31 @@ const FirebaseVerificationPage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Animated Background */}
+      {/* Enhanced Animated Background */}
       <div className="fixed inset-0 overflow-hidden">
-        <div className="absolute -inset-10 opacity-10">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gray-300 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-gray-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-4000"></div>
+        <div className="absolute -inset-10 opacity-20">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white rounded-full mix-blend-screen filter blur-3xl animate-pulse"></div>
+          <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gray-300 rounded-full mix-blend-screen filter blur-2xl animate-pulse animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-gray-400 rounded-full mix-blend-screen filter blur-3xl animate-pulse animation-delay-4000"></div>
+          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-white rounded-full mix-blend-screen filter blur-2xl animate-pulse animation-delay-1000"></div>
+          <div className="absolute bottom-1/3 right-1/3 w-88 h-88 bg-gray-200 rounded-full mix-blend-screen filter blur-3xl animate-pulse animation-delay-3000"></div>
+        </div>
+        {/* Moving particles */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-10 left-10 w-2 h-2 bg-white rounded-full animate-bounce animation-delay-1000"></div>
+          <div className="absolute top-20 right-20 w-1 h-1 bg-gray-300 rounded-full animate-bounce animation-delay-2000"></div>
+          <div className="absolute bottom-32 left-32 w-1.5 h-1.5 bg-white rounded-full animate-bounce animation-delay-3000"></div>
+          <div className="absolute bottom-20 right-40 w-1 h-1 bg-gray-400 rounded-full animate-bounce animation-delay-500"></div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes slideRight {
+          0% { transform: translateX(-100%); }
+          50% { transform: translateX(300%); }
+          100% { transform: translateX(-100%); }
+        }
+      `}</style>
 
       {/* Mobile View */}
       <div className="lg:hidden relative z-10 flex flex-col min-h-screen">
@@ -186,78 +206,84 @@ const FirebaseVerificationPage = () => {
       </div>
 
       {/* Desktop View */}
-      <div className="hidden lg:flex min-h-screen relative z-10">
-        {/* Left Panel */}
-        <div className="flex-1 bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-12 relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
-          <div className="text-center text-white max-w-lg relative z-10">
-            <div className="w-24 h-24 mx-auto mb-8 bg-white rounded-3xl flex items-center justify-center">
-              <Shield className="w-12 h-12 text-black" />
-            </div>
-            <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              Secure Verification
-            </h2>
-            <p className="text-gray-400 text-lg leading-relaxed mb-8">
-              Your account security is our top priority. We use industry-standard encryption and multi-factor authentication to protect your data.
-            </p>
-            <div className="flex items-center justify-center space-x-2 text-white">
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse animation-delay-1000"></div>
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse animation-delay-2000"></div>
+      <div className="hidden lg:flex min-h-screen relative z-10 items-center justify-center p-8">
+        {/* Main Container */}
+        <div className="flex w-full max-w-7xl h-[600px] bg-black/40 backdrop-blur-lg border border-white/10 rounded-3xl shadow-2xl overflow-hidden">
+          {/* Left Panel */}
+          <div className="flex-1 bg-gradient-to-br from-gray-900/80 via-black/90 to-gray-900/80 flex items-center justify-center p-12 relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+            <div className="text-center text-white max-w-lg relative z-10">
+              <div className="w-24 h-24 mx-auto mb-8 bg-white/90 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-lg">
+                <Shield className="w-12 h-12 text-black" />
+              </div>
+              <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                Secure Verification
+              </h2>
+              <p className="text-gray-300 text-lg leading-relaxed mb-8">
+                Your account security is our top priority. We use industry-standard encryption and multi-factor authentication to protect your data.
+              </p>
+              <div className="flex items-center justify-center space-x-3">
+                <div className="flex space-x-1">
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-white/70 rounded-full animate-pulse animation-delay-300"></div>
+                  <div className="w-2 h-2 bg-white/50 rounded-full animate-pulse animation-delay-600"></div>
+                </div>
+                <span className="text-white/60 text-sm font-medium">Processing</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Right Panel */}
-        <div className="flex-1 flex items-center justify-center p-12 bg-white text-black relative">
-          <div className="absolute inset-0 bg-gradient-to-l from-gray-50/30 via-transparent to-transparent"></div>
-          <div className="w-full max-w-md relative z-10">
-            <div className="text-center mb-10">
-              <div className="mx-auto mb-6 flex justify-center">
-                {status === 'loading' ? (
-                  <div className="relative">
-                    <div className="w-16 h-16 border-4 border-gray-200 rounded-full"></div>
-                    <div className="absolute top-0 left-0 w-16 h-16 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
-                    <div className="absolute top-1 left-1 w-14 h-14 border-2 border-gray-400 border-t-transparent rounded-full animate-spin animation-delay-500" style={{animationDuration: '1.5s'}}></div>
-                    <div className="absolute top-2 left-2 w-12 h-12 border border-gray-600 border-t-transparent rounded-full animate-spin animation-delay-1000" style={{animationDuration: '2s'}}></div>
-                  </div>
-                ) : (
-                  <div className="text-black">
-                    {status === 'success' && <CheckCircle className="w-12 h-12 text-black" />}
-                    {status === 'error' && <XCircle className="w-12 h-12 text-red-500" />}
-                    {status === 'reset' && <Key className="w-12 h-12 text-black" />}
-                  </div>
-                )}
+          {/* Right Panel */}
+          <div className="flex-1 flex items-center justify-center p-12 bg-white/95 backdrop-blur-sm text-black relative">
+            <div className="absolute inset-0 bg-gradient-to-l from-gray-50/50 via-transparent to-transparent"></div>
+            <div className="w-full max-w-md relative z-10">
+              <div className="text-center mb-10">
+                <div className="mx-auto mb-8 flex justify-center">
+                  {status === 'loading' ? (
+                    <div className="relative w-24 h-3 bg-gray-200 rounded-full overflow-hidden">
+                      <div className="absolute inset-0">
+                        <div className="h-full bg-gradient-to-r from-transparent via-black to-transparent w-1/2 animate-[slideRight_2s_ease-in-out_infinite] rounded-full"></div>
+                      </div>
+                      <div className="absolute -inset-y-0.5 inset-x-0 bg-gradient-to-r from-transparent via-black/30 to-transparent w-3/4 animate-[slideRight_1.8s_ease-in-out_infinite] rounded-full"></div>
+                    </div>
+                  ) : (
+                    <div className="text-black">
+                      {status === 'success' && <CheckCircle className="w-12 h-12 text-green-600" />}
+                      {status === 'error' && <XCircle className="w-12 h-12 text-red-500" />}
+                      {status === 'reset' && <Key className="w-12 h-12 text-black" />}
+                    </div>
+                  )}
+                </div>
+                <h1 className="text-3xl font-bold text-black mb-3">
+                  {getTitle()}
+                </h1>
+                <p className="text-gray-600 text-lg">{message}</p>
               </div>
-              <h1 className="text-3xl font-bold text-black mb-3">
-                {getTitle()}
-              </h1>
-              <p className="text-gray-600 text-lg">{message}</p>
+
+              {status === 'reset' && <PasswordResetForm onSubmit={handlePasswordReset} />}
+
+              {status === 'success' && (
+                <div className="space-y-6">
+                  <button
+                    onClick={() => window.location.href = continueUrl}
+                    className="w-full flex justify-center items-center px-6 py-4 bg-black text-white font-semibold rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 text-lg shadow-lg border border-black"
+                  >
+                    Continue to App <ArrowRight className="ml-2 h-5 w-5" />
+                  </button>
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className="text-center">
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="text-gray-600 hover:text-black font-semibold transition-colors"
+                  >
+                    Try Again
+                  </button>
+                </div>
+              )}
             </div>
-
-            {status === 'reset' && <PasswordResetForm onSubmit={handlePasswordReset} />}
-
-            {status === 'success' && (
-              <div className="space-y-6">
-                <button
-                  onClick={() => window.location.href = continueUrl}
-                  className="w-full flex justify-center items-center px-6 py-4 bg-black text-white font-semibold rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 text-lg shadow-lg"
-                >
-                  Continue to App <ArrowRight className="ml-2 h-5 w-5" />
-                </button>
-              </div>
-            )}
-
-            {status === 'error' && (
-              <div className="text-center">
-                <button
-                  onClick={() => window.location.reload()}
-                  className="text-gray-600 hover:text-black font-semibold transition-colors"
-                >
-                  Try Again
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -362,9 +388,8 @@ const PasswordResetForm: React.FC<PasswordResetFormProps> = ({ onSubmit }) => {
       >
         {isSubmitting ? (
           <>
-            <div className="relative mr-2">
-              <div className="w-5 h-5 border-2 border-gray-400 rounded-full"></div>
-              <div className="absolute top-0 left-0 w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            <div className="relative mr-3 w-5 h-1 bg-gray-600 rounded-full overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent w-1/2 animate-[slideRight_1.5s_ease-in-out_infinite] rounded-full"></div>
             </div>
             Resetting...
           </>
