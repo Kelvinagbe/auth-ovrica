@@ -72,10 +72,14 @@ const FirebaseVerificationPage = () => {
     handleVerification();
   }, []);
 
-  const handlePasswordReset = async (newPassword) => {
+  const handlePasswordReset = async (newPassword: string) => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
       const actionCode = urlParams.get('oobCode');
+      
+      if (!actionCode) {
+        throw new Error('Invalid action code');
+      }
       
       await confirmPasswordReset(auth, actionCode, newPassword);
       setStatus('success');
@@ -137,7 +141,7 @@ const FirebaseVerificationPage = () => {
                 <Shield className="w-8 h-8 text-black" />
               </div>
               <h2 className="text-xl font-bold bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent">
-                KelvinTopup
+                Ovrica
               </h2>
             </div>
 
@@ -208,7 +212,7 @@ const FirebaseVerificationPage = () => {
             {/* Brand Header */}
             <div className="text-center mb-10">
               <h2 className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-yellow-600 bg-clip-text text-transparent mb-2">
-                KelvinTopup
+                Ovrica
               </h2>
               <div className="w-16 h-1 bg-gradient-to-r from-amber-400 to-yellow-500 mx-auto rounded-full"></div>
             </div>
@@ -260,7 +264,11 @@ const FirebaseVerificationPage = () => {
   );
 };
 
-const PasswordResetForm = ({ onSubmit }) => {
+interface PasswordResetFormProps {
+  onSubmit: (password: string) => Promise<void>;
+}
+
+const PasswordResetForm: React.FC<PasswordResetFormProps> = ({ onSubmit }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -268,7 +276,7 @@ const PasswordResetForm = ({ onSubmit }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
