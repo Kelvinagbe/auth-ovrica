@@ -65,7 +65,7 @@ const FirebaseVerificationPage = () => {
         }
       } catch (error) {
         setStatus('error');
-        setMessage(error.message || 'Verification failed');
+        setMessage(error instanceof Error ? error.message : 'Verification failed');
       }
     };
 
@@ -82,7 +82,7 @@ const FirebaseVerificationPage = () => {
       setMessage('Password reset successfully');
     } catch (error) {
       setStatus('error');
-      setMessage(error.message || 'Password reset failed');
+      setMessage(error instanceof Error ? error.message : 'Password reset failed');
     }
   };
 
@@ -286,7 +286,7 @@ const PasswordResetForm = ({ onSubmit }) => {
     try {
       await onSubmit(password);
     } catch (error) {
-      setError(error.message);
+      setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsSubmitting(false);
     }
