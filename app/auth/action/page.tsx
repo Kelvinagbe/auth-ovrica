@@ -43,7 +43,7 @@ const FirebaseVerificationPage = () => {
           case 'verifyEmail':
             await applyActionCode(auth, actionCode);
             setStatus('success');
-            setMessage('Email verified successfully');
+            setMessage('Email verified successfully. You can now login to your account.');
             break;
 
           case 'resetPassword':
@@ -83,7 +83,7 @@ const FirebaseVerificationPage = () => {
 
       await confirmPasswordReset(auth, actionCode, newPassword);
       setStatus('success');
-      setMessage('Password reset successfully');
+      setMessage('Password reset successfully. You can now login with your new password.');
     } catch (error) {
       setStatus('error');
       setMessage(error instanceof Error ? error.message : 'Password reset failed');
@@ -94,7 +94,7 @@ const FirebaseVerificationPage = () => {
     switch (status) {
       case 'loading':
         return (
-          <div className="relative w-16 h-2">
+          <div className="relative w-24 h-2">
             <div className="w-full h-full bg-gray-800 rounded-full overflow-hidden">
               <div className="h-full bg-gradient-to-r from-transparent via-white to-transparent w-1/3 animate-pulse rounded-full relative">
                 <div className="absolute inset-0 bg-white animate-[slideRight_2s_ease-in-out_infinite] rounded-full"></div>
@@ -164,7 +164,6 @@ const FirebaseVerificationPage = () => {
             {/* Logo/Brand */}
             <div className="text-center mb-12">
               <div className="w-16 h-16 mx-auto mb-4 bg-white rounded-2xl flex items-center justify-center">
-                <Shield className="w-8 h-8 text-black" />
               </div>
             </div>
 
@@ -181,13 +180,8 @@ const FirebaseVerificationPage = () => {
             {status === 'reset' && <PasswordResetForm onSubmit={handlePasswordReset} />}
 
             {status === 'success' && (
-              <div className="space-y-4">
-                <button
-                  onClick={() => window.location.href = continueUrl}
-                  className="w-full flex justify-center items-center px-4 py-3 bg-white text-black font-semibold rounded-xl hover:bg-gray-200 transition-all duration-300 transform hover:scale-105"
-                >
-                  Continue <ArrowRight className="ml-2 h-4 w-4" />
-                </button>
+              <div className="space-y-6">
+                {/* No button - just confirmation */}
               </div>
             )}
 
@@ -214,7 +208,6 @@ const FirebaseVerificationPage = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
             <div className="text-center text-white max-w-lg relative z-10">
               <div className="w-24 h-24 mx-auto mb-8 bg-white/90 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-lg">
-                <Shield className="w-12 h-12 text-black" />
               </div>
               <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 Secure Verification
@@ -240,7 +233,7 @@ const FirebaseVerificationPage = () => {
               <div className="text-center mb-10">
                 <div className="mx-auto mb-8 flex justify-center">
                   {status === 'loading' ? (
-                    <div className="relative w-24 h-3 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="relative w-32 h-3 bg-gray-200 rounded-full overflow-hidden">
                       <div className="absolute inset-0">
                         <div className="h-full bg-gradient-to-r from-transparent via-black to-transparent w-1/2 animate-[slideRight_2s_ease-in-out_infinite] rounded-full"></div>
                       </div>
@@ -264,12 +257,7 @@ const FirebaseVerificationPage = () => {
 
               {status === 'success' && (
                 <div className="space-y-6">
-                  <button
-                    onClick={() => window.location.href = continueUrl}
-                    className="w-full flex justify-center items-center px-6 py-4 bg-black text-white font-semibold rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 text-lg shadow-lg border border-black"
-                  >
-                    Continue to App <ArrowRight className="ml-2 h-5 w-5" />
-                  </button>
+                  {/* No button - just confirmation */}
                 </div>
               )}
 
@@ -368,10 +356,9 @@ const PasswordResetForm: React.FC<PasswordResetFormProps> = ({ onSubmit }) => {
             type={showConfirmPassword ? 'text' : 'password'}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-colors text-black bg-white placeholder-gray-500"
+            className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-colors"
             required
             minLength={6}
-            placeholder="Confirm new password"
           />
           <button
             type="button"
@@ -386,13 +373,12 @@ const PasswordResetForm: React.FC<PasswordResetFormProps> = ({ onSubmit }) => {
       <button
         type="submit"
         disabled={isSubmitting}
-        onClick={handleSubmit}
         className="w-full flex justify-center items-center px-6 py-4 bg-black text-white font-semibold rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
       >
         {isSubmitting ? (
           <>
-            <div className="relative mr-3 w-5 h-1 bg-gray-600 rounded-full overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent w-1/2 animate-[slideRight_1.5s_ease-in-out_infinite] rounded-full"></div>
+            <div className="relative mr-3 w-8 h-1 bg-gray-300 rounded-full overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black to-transparent w-1/2 animate-[slideRight_1.5s_ease-in-out_infinite] rounded-full"></div>
             </div>
             Resetting...
           </>
