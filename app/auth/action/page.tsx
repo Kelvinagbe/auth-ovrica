@@ -65,7 +65,26 @@ const FirebaseVerificationPage = () => {
         }
       } catch (error) {
         setStatus('error');
-        setMessage(error instanceof Error ? error.message : 'Verification failed');
+        let userFriendlyMessage = 'Verification failed';
+        
+        if (error instanceof Error) {
+          const errorMessage = error.message.toLowerCase();
+          if (errorMessage.includes('invalid-action-code') || errorMessage.includes('expired-action-code')) {
+            userFriendlyMessage = 'This verification link is invalid or has expired. Please request a new one.';
+          } else if (errorMessage.includes('user-disabled')) {
+            userFriendlyMessage = 'This account has been disabled. Please contact support.';
+          } else if (errorMessage.includes('user-not-found')) {
+            userFriendlyMessage = 'No account found with this email address.';
+          } else if (errorMessage.includes('network') || errorMessage.includes('fetch') || errorMessage.includes('connection')) {
+            userFriendlyMessage = 'Network connection failed. Please check your internet connection and try again.';
+          } else if (errorMessage.includes('too-many-requests')) {
+            userFriendlyMessage = 'Too many attempts. Please wait a moment and try again.';
+          } else if (errorMessage.includes('quota-exceeded')) {
+            userFriendlyMessage = 'Service temporarily unavailable. Please try again later.';
+          }
+        }
+        
+        setMessage(userFriendlyMessage);
       }
     };
 
@@ -104,7 +123,7 @@ const FirebaseVerificationPage = () => {
           </div>
         );
       case 'success':
-        return <CheckCircle className="w-12 h-12 text-white" />;
+        return <CheckCircle className="w-12 h-12 text-green-500" />;
       case 'error':
         return <XCircle className="w-12 h-12 text-red-400" />;
       case 'reset':
@@ -233,7 +252,7 @@ const FirebaseVerificationPage = () => {
                     </div>
                   ) : (
                     <div className="text-black">
-                      {status === 'success' && <CheckCircle className="w-12 h-12 text-green-600" />}
+                      {status === 'success' && <CheckCircle className="w-12 h-12 text-green-500" />}
                       {status === 'error' && <XCircle className="w-12 h-12 text-red-500" />}
                       {status === 'reset' && <Key className="w-12 h-12 text-black" />}
                     </div>
@@ -301,7 +320,24 @@ const PasswordResetForm: React.FC<PasswordResetFormProps> = ({ onSubmit }) => {
     try {
       await onSubmit(password);
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'An error occurred');
+      let userFriendlyMessage = 'An error occurred';
+      
+      if (error instanceof Error) {
+        const errorMessage = error.message.toLowerCase();
+        if (errorMessage.includes('invalid-action-code') || errorMessage.includes('expired-action-code')) {
+          userFriendlyMessage = 'This reset link is invalid or has expired. Please request a new password reset.';
+        } else if (errorMessage.includes('weak-password')) {
+          userFriendlyMessage = 'Password must be at least 8 characters long and include numbers, letters, and symbols.';
+        } else if (errorMessage.includes('network') || errorMessage.includes('fetch') || errorMessage.includes('connection') || errorMessage.includes('timeout')) {
+          userFriendlyMessage = 'Network connection failed. Please check your internet connection and try again.';
+        } else if (errorMessage.includes('too-many-requests')) {
+          userFriendlyMessage = 'Too many password reset attempts. Please wait 15 minutes and try again.';
+        } else if (errorMessage.includes('internal-error') || errorMessage.includes('service-unavailable')) {
+          userFriendlyMessage = 'Service temporarily unavailable. Please try again in a few minutes.';
+        }
+      }
+      
+      setError(userFriendlyMessage);
     } finally {
       setIsSubmitting(false);
     }
